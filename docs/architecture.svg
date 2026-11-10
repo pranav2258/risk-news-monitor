@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" font-family="Inter, 'DejaVu Sans', sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748b"/>
+    </marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b45309"/>
+    </marker>
+    <style>
+      .node { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.5; }
+      .name { font-family: 'DejaVu Sans Mono', monospace; font-size: 13px; fill: #0f172a; font-weight: 600; }
+      .desc { font-size: 12.5px; fill: #475569; }
+      .edge { stroke: #64748b; stroke-width: 1.8; fill: none; }
+      .label { font-family: 'DejaVu Sans Mono', monospace; font-size: 12px; fill: #64748b; }
+      .chip { fill: #eef2f7; stroke: #d5dde8; stroke-width: 1; }
+      .chiptext { font-size: 13px; fill: #334155; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="630" fill="#f8fafc"/>
+
+  <!-- Title -->
+  <text x="60" y="72" font-size="34" font-weight="700" fill="#0f172a">Risk News Monitor</text>
+  <text x="60" y="106" font-size="18" fill="#475569">A LangGraph agent that turns news into analyst-reviewed counterparty risk alerts</text>
+
+  <!-- Main path -->
+  <g>
+    <rect class="node" x="40"  y="200" width="160" height="70" rx="10"/>
+    <text class="name" x="120" y="230" text-anchor="middle">load_and_screen</text>
+    <text class="desc" x="120" y="252" text-anchor="middle">load + strip injection</text>
+
+    <rect class="node" x="232" y="200" width="160" height="70" rx="10"/>
+    <text class="name" x="312" y="230" text-anchor="middle">match_counterparty</text>
+    <text class="desc" x="312" y="252" text-anchor="middle">alias matching</text>
+
+    <rect class="node" x="424" y="200" width="160" height="70" rx="10"/>
+    <text class="name" x="504" y="230" text-anchor="middle">retrieve_context</text>
+    <text class="desc" x="504" y="252" text-anchor="middle">memory + RAG + budget</text>
+
+    <rect class="node" x="616" y="200" width="160" height="70" rx="10"/>
+    <text class="name" x="696" y="230" text-anchor="middle">assess_risk</text>
+    <text class="desc" x="696" y="252" text-anchor="middle">structured output</text>
+
+    <rect class="node" x="808" y="200" width="160" height="70" rx="10"/>
+    <text class="name" x="888" y="230" text-anchor="middle">validate_output</text>
+    <text class="desc" x="888" y="252" text-anchor="middle">schema + grounding</text>
+
+    <rect x="1000" y="200" width="160" height="70" rx="10" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="1.5"/>
+    <text class="name" x="1080" y="230" text-anchor="middle">publish</text>
+    <text class="desc" x="1080" y="252" text-anchor="middle">log or alert + memory</text>
+
+    <path class="edge" d="M200,235 L230,235" marker-end="url(#arrow)"/>
+    <path class="edge" d="M392,235 L422,235" marker-end="url(#arrow)"/>
+    <path class="edge" d="M584,235 L614,235" marker-end="url(#arrow)"/>
+    <path class="edge" d="M776,235 L806,235" marker-end="url(#arrow)"/>
+    <path class="edge" d="M968,235 L998,235" marker-end="url(#arrow)"/>
+    <text class="label" x="984" y="196" text-anchor="middle">auto</text>
+  </g>
+
+  <!-- Skip branch -->
+  <path class="edge" d="M312,270 L312,348" marker-end="url(#arrow)"/>
+  <text class="label" x="322" y="314">not_relevant</text>
+  <rect x="232" y="350" width="160" height="56" rx="10" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text class="name" x="312" y="376" text-anchor="middle">skip</text>
+  <text class="desc" x="312" y="396" text-anchor="middle">no counterparty</text>
+
+  <!-- Human review branch -->
+  <path d="M888,270 L888,348" stroke="#b45309" stroke-width="1.8" fill="none" marker-end="url(#arrow-amber)"/>
+  <text x="898" y="306" font-family="'DejaVu Sans Mono', monospace" font-size="12" fill="#b45309">needs_review</text>
+  <text x="898" y="322" font-size="11.5" fill="#92400e">high / injection / invalid</text>
+  <rect x="808" y="350" width="160" height="70" rx="10" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8"/>
+  <text class="name" x="888" y="380" text-anchor="middle">human_review</text>
+  <text class="desc" x="888" y="402" text-anchor="middle">interrupt() · pause</text>
+  <path d="M968,385 L1080,385 L1080,272" stroke="#b45309" stroke-width="1.8" fill="none" marker-end="url(#arrow-amber)"/>
+  <text x="1090" y="340" font-family="'DejaVu Sans Mono', monospace" font-size="12" fill="#b45309">resume</text>
+
+  <!-- Supporting pieces -->
+  <line x1="40" y1="470" x2="1160" y2="470" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="40" y="500" font-size="13" font-weight="600" fill="#64748b" letter-spacing="1">AROUND THE GRAPH</text>
+
+  <rect class="chip" x="40"  y="518" width="262" height="64" rx="8"/>
+  <text class="chiptext" x="56" y="543" font-weight="600">SQLite pipeline</text>
+  <text class="desc" x="56" y="564">validate · dedupe · incremental loads</text>
+
+  <rect class="chip" x="320" y="518" width="262" height="64" rx="8"/>
+  <text class="chiptext" x="336" y="543" font-weight="600">Checkpointer + memory</text>
+  <text class="desc" x="336" y="564">thread state · alert history</text>
+
+  <rect class="chip" x="600" y="518" width="262" height="64" rx="8"/>
+  <text class="chiptext" x="616" y="543" font-weight="600">Tracing</text>
+  <text class="desc" x="616" y="564">latency · tokens · audit trail</text>
+
+  <rect class="chip" x="880" y="518" width="280" height="64" rx="8"/>
+  <text class="chiptext" x="896" y="543" font-weight="600">Evals + CI gates</text>
+  <text class="desc" x="896" y="564">11 labelled cases · 3 versions compared</text>
+</svg>
